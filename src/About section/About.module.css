@@ -1,0 +1,332 @@
+.container {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 2rem 0.1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* \\\\\\\\\\\\\\\  Transitions  \\\\\\\\\\\\\\\\\\\ */
+
+.Head_master {
+    opacity: 0;
+    transition: all 1s ease-in-out;
+    position: relative;
+    top: -5rem;
+}
+
+.Head_master.visible {
+    opacity: 1;
+    top: 0rem;
+}
+
+.projects {
+    opacity: 0;
+    transition: all 1s ease-in-out;
+}
+
+.img {
+    opacity: 0;
+    transition: all 1.2s ease-out;
+}
+
+.scale {
+    transform: scale(0.7);
+}
+
+.scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.text_section {
+    opacity: 0;
+    margin: 1rem 0;
+}
+
+
+.from_left:nth-child(1) {
+     transform: scale(0.7);
+    transition: all 0.8s ease-out;
+}
+
+.from_left:nth-child(2) {
+     transform: scale(0.7);
+    transition: all 1s ease-out;
+}
+
+.from_left:nth-child(3) {
+     transform: scale(0.7);
+    transition: all 1.2s ease-out;
+}
+
+.from_left:nth-child(4) {
+     transform: scale(0.7);
+    transition: all 1.4s ease-out;
+}
+.from_left:nth-child(5) {
+     transform: scale(0.7);
+    transition: all 1.4s ease-out;
+}
+
+.from_left.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* \\\\\\\\\\\\\\\  Transitions  \\\\\\\\\\\\\\\\\\\ */
+
+.Head {
+    border-bottom: 1px solid hsla(60, 3%, 6%, 0.265);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 2%;
+}
+
+.Head_master {
+    width: 98%;
+    padding: 1rem;
+    border-radius: 0.2rem;
+    background: #243858;
+}
+
+.Head_master h1,
+.Head h1 {
+    font-family: "Jost", sans-serif;
+    padding: 15px 5px 15px 40px;
+    font-size: 25px;
+    font-weight: 600;
+    padding: 10px 5px;
+}
+
+.Head_master h1 {
+    color: #8D8D8D;
+}
+
+/* ////////// CONDITON STYLES /////////////// */
+
+.container .hide {
+    display: none;
+    /* Completely hide the element */
+}
+
+/* ////////// CONDITON STYLES /////////////// */
+
+
+.about_container {
+    width: 95%;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 0.2rem;
+    overflow: hidden;
+}
+
+.About {
+    color: #101012;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0.5rem
+}
+
+.top {
+    width: 100%;
+    padding: 1rem 0.1rem;
+}
+
+.image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.1rem 0.1rem;
+}
+
+.image .img {
+    width: 100%;
+}
+
+.texts {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.texts .text_section {
+    max-width: 100%;
+}
+
+.bottom .texts .text_section {
+    max-width: 100%;
+}
+
+.bottom .texts {
+    display: flex;
+    justify-content: center;
+}
+
+.texts p {
+    font-family: "Jost", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.texts h1 {
+    font-family: "Jost", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.bottom {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap-reverse;
+}
+
+.bottom .projects {
+    margin: 2rem;
+    padding: 0.3rem 0;
+    width: 70%;
+    background: #E33B4E;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #E33B4E;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+@media screen and (min-width: 525px) {
+
+    .bottom .texts .text_section,
+    .texts .text_section {
+        max-width: 48%;
+    }
+
+    .bottom .projects {
+        width: 40%;
+        height: 100px;
+        margin: 15px;
+        padding: 0;
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+    .Head_master {
+        padding: 2rem 1rem;
+        margin-top: 30px;
+    }
+
+    .top {
+        padding: 2rem 0.1rem;
+        width: 100%;
+        display: flex;
+    }
+
+    .About {
+        padding: 1rem 1rem
+    }
+
+    .texts {
+        width: 58%;
+        gap: 20px;
+    }
+
+    .texts .text_section {
+        max-width: 100%;
+    }
+
+    .bottom .texts .text_section {
+        max-width: 100%;
+    }
+
+    .image {
+        width: 40%;
+
+    }
+
+    .texts p {
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .texts h1 {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .bottom .projects {
+        width: 70%;
+        margin: 15px;
+        padding: 0.3rem 0;
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    .About {
+        padding: 1rem 2rem
+    }
+
+    .texts {
+        width: 58%;
+        gap: 10px;
+        overflow: hidden;
+    }
+
+    .texts .text_section {
+        max-width: 48%;
+    }
+
+    .texts p {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .texts h1 {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .image {
+        width: 40%;
+    }
+
+    .image img {
+        width: 70%;
+    }
+
+    .from_left:nth-child(1) {
+        transform: translateX(-100vw);
+        transition: all 0.8s ease-out;
+    }
+    
+    .from_left:nth-child(2) {
+        transform: translateX(100vw);
+        transition: all 1s ease-out;
+    }
+    
+    .from_left:nth-child(3) {
+        transform: translateX(-100vw);
+        transition: all 1.2s ease-out;
+    }
+    
+    .from_left:nth-child(4) {
+        transform: translateX(100vw);
+        transition: all 1.4s ease-out;
+    }
+    .from_left.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}

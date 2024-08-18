@@ -1,0 +1,253 @@
+.container {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 2rem 0.1rem ;
+    overflow: hidden;
+}
+
+.Scale{
+    transform: scale(0.7);
+    opacity: 0;
+    transition: all 1.2s ease-out;
+}
+.Scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.service_container{
+    width: 95%;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 0.2rem;
+}
+.service_container a{
+    text-decoration: none;
+}
+.Head {
+    border-bottom: 1px solid hsla(60, 3%, 6%, 0.265);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 2%;
+}
+
+
+.Head_master h1,
+.Head h1 {
+    font-family: "Jost", sans-serif;
+    padding: 15px 5px 15px 40px;
+    font-size: 25px;
+    font-weight: 600;
+    padding: 10px 5px;
+}
+
+.Head_master h1 {
+    color: #8D8D8D;
+}
+
+.Head_master {
+    width: 98%;
+    padding: 1rem ;
+    border-radius: 0.2rem;
+    background: #243858;
+}
+
+.serviceList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0;
+    gap: 2rem 0.8rem;
+    color: #000000;
+}
+.serviceList a{
+    width: 70%;
+    padding: 0.75rem 0.1rem;
+    border-radius: 0.2rem;
+    background-color: #E7ECF0;
+}
+.Service {
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+    gap: 15px;
+}
+.Service .Image {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Service .Image .img {
+    max-width: 60%;
+}
+
+
+.Service .texts {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.Service .texts p {
+    font-family: "Jost", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+}
+.Service .texts .Arrow {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.Service .texts .Arrow img {
+    width: 20px;
+    position: relative;
+    left: 0;
+    opacity: 0;
+    transition: left 1.2s;
+}
+.Service:hover .Arrow img{
+    left: 30px;
+    margin-top: 5px;
+    opacity: 1;
+}
+
+
+/* ////////// CONDITON STYLES /////////////// */
+.container .hide{
+    display: none;
+}
+
+/* ////////// CONDITON STYLES /////////////// */
+
+
+@media screen and (min-width: 425px){
+  
+    .serviceList {
+        flex-direction: row;
+        align-items: normal;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 2rem 0;
+        gap: 2rem 0.8rem;
+    }
+    .serviceList a{
+        width: 48%;
+    }
+    .Service {
+        padding: 0.5rem 0.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        width: 100%;
+        height: 90%;
+        gap: 15px;
+        border-radius: 0.1rem;
+    }
+    .Service .Image {
+        width: 100%;
+        height: 70%;
+        display: flex;
+        justify-content: center;
+    }
+        
+}
+
+
+@media screen and (min-width: 768px){
+    .Head_master{
+        margin-top: 30px;
+        padding: 2rem 1rem;
+    }
+    .container .Head  {
+       padding: 0.1rem 0;
+    }
+    .container .Head h1 {
+        font-size: 25px;
+        padding: 15px 5px 15px 40px;
+    }
+
+    .Service .texts p {
+        font-family: "Jost", sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        color: #000000;
+    }
+    
+    .Service .texts .Arrow img {
+        width: 30px;
+        position: relative;
+        left: -10px;
+        opacity: 0;
+        transition: left 1.4s;
+    }
+    .Service:hover .Arrow img{
+        left: 20px;
+        opacity: 1;
+    }
+}
+
+@media screen and  (min-width: 1024px){
+  
+    .container .Head h1 {
+        font-size: 35px;
+        padding: 15px 5px 15px 40px;
+    }
+   
+    .serviceList {
+        padding: 2rem 0.75rem;
+        gap: 2rem 1.4rem;
+    }
+    .serviceList a{
+        width: 31%;
+        padding: 0.8rem 0.25rem 1.5rem 0.25rem;
+    }
+    .Service {
+        padding: 0.25rem ;
+        height: 90%;
+        gap: 1rem;
+        border-radius: 0.1rem;
+    }
+    .Service .Image {
+        width: 100%;
+        height: 75%;
+        display: flex;
+        justify-content: center;
+    }
+   
+    .container .Service .texts p {
+        font-size: 22px;
+        font-weight: 600;
+    }
+    
+    .container .Service .texts .Arrow img {
+        width: 30px;
+        position: relative;
+        left: -10px;
+        opacity: 0;
+        transition: left 1.4s;
+    }
+    .container .Service:hover .Arrow img{
+        left: 20px;
+        opacity: 1;
+    }
+};
+    

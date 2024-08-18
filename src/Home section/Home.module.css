@@ -1,0 +1,150 @@
+.container {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 2rem 0.1rem 2rem 0.1rem;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.SlideElement:nth-child(1){
+    opacity: 0;
+    transition: all 1.2s ease-out;
+    transform: translateX(-100vw);
+}
+.SlideElement:nth-child(2){
+    opacity: 0;
+    transition: all 1.2s ease-out;
+    transform: translateX(100vw);
+}
+.SlideElement.visible{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+.Homebtn{
+    opacity: 0;
+    transition: all 1.2s ease-out;
+}
+.scale {
+    transform: scale(0.7);
+}
+
+.scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+.inspire a{
+    text-decoration: none;
+}
+
+
+.inspire {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    color: #102110;
+}
+
+.inspire h1 {
+    text-align: center;
+    font-family: "Jost", sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.inspire p {
+    font-family: "Jost", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.Homebtn {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    background: #E33B4E;
+    color: #FFFFFF;
+    padding: 0.5rem 1.5rem;
+    border-radius: 2px;
+    border: none;
+    font-family: "Jost", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.Homebtn:hover {
+    box-shadow: 0 4px 24px hsla(359, 75%, 40%, 0.4);
+}
+
+.Homebtn img {
+    width: 20px;
+}
+
+
+
+
+/* ========================= Media Quary ===================== */
+
+@media screen and (min-width: 768px) {
+    .container .inspire h1 {
+        font-size: 35px;
+    }
+
+    .container .inspire p {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .container .Homebtn {
+        padding: 12px 18px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .container .orederbutton:hover {
+        box-shadow: 0 3px 20px hsla(359, 75%, 40%, 0.4);
+    }
+
+    .container .Homebtn img {
+        width: 20px;
+    }
+}
+
+
+@media screen and (min-width: 1024px) {
+    .container .inspire h1 {
+        font-family: "Jost", sans-serif;
+        font-size: 55px;
+    }
+
+    .container .inspire p {
+        font-size: 20px;
+    }
+
+    .container .Homebtn {
+        padding: 12px 22px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .container .orederbutton:hover {
+        box-shadow: 0 4px 24px hsla(359, 75%, 40%, 0.4);
+    }
+
+    .container .Homebtn img {
+        width: 35px;
+    }
+    
+}

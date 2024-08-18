@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import LandingPage from './Landing Page/LandingPage.jsx'
+import AboutLanding from './About section/AboutLanding.jsx'
+import ServiceLanding from './Service Section/ServiceLanding.jsx';
+import WorkLanding from './Work  Section/WorkLanding.jsx'
+import Foter_Landing from './Footer section/Footer_Langing.jsx'
+import Details from './Service Section/Details.jsx'
+import Testmonials from './Testimonials Section/Testimonials.jsx';
 import './App.css'
 
+
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+
+
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter basename="/Cosob-Media">
+        <Routes>
+          
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/about" element={<AboutLanding />} />
+          <Route path="/service" element={<ServiceLanding />} />
+          <Route path="/details/:slug" element={<Details />} /> 
+          <Route path="/work" element={<WorkLanding />} />
+          <Route path="/contact" element={<Foter_Landing />} /> 
+          <Route path="/testmonials" element={<Testmonials />} /> 
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
 
 export default App
+
+
+
+
+{/* <Router basename="/NewCosob">
+<Routes>
+<Route path="/" element={<LandingPage />} />
+</Routes>
+</Router> */}
+
+
+  //  
+  //   
+  //   
+  //   
+
+  //   
+  //   

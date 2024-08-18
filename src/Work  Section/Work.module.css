@@ -1,0 +1,243 @@
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem .1rem;
+    overflow: hidden;
+}
+
+
+
+.Scale{
+    transform: scale(0.7);
+    opacity: 0;
+    transition: all 1.2s ease-out;
+}
+.Scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+
+.Work_section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem;
+}
+.works_Continer{
+    width: 95%;
+    background: #F8F8F9;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding: 0.2rem;
+}
+.WorkHead{
+    border-bottom: 1px solid hsla(60, 3%, 6%, 0.265);
+    width: 100%;
+}
+
+.WorkHead h1{
+    font-family: "Jost", sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    padding: 15px 5px;
+}
+
+.workNavigations,
+.Buttons{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 1.3rem;
+}
+.workNavigations{
+    padding: 0;
+}
+.workNavigations .buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+.buttons button{
+    cursor: pointer;
+    padding: 10px 14px;
+    background-color: #E7ECF0;
+    border-radius: 2px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+.buttons button{
+    display: none;
+}
+
+
+/* /////////////// Hiden side ///////////////// */
+
+.selection{
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #919191ba;
+    background-color: #E7EFF1F0;
+}
+.selection option{
+    padding: 10px 10p 10px 0;
+}
+
+/* /////////////// Hiden side ///////////////// */
+
+.works{
+    width: 100%;
+    padding: 0.5rem ;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.work{
+    width: 90%;
+    /* height: 280px; */
+    padding-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #E7ECF0;
+    transition: bottom .4s;
+}
+
+.work .work_img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 75%;
+}
+.work img{
+    max-width: 100%;
+    max-height: 100%;
+    transition: transform .4s;
+}
+.work:hover .work_img img{
+    transform: scale(1.02);
+}
+.work_Txts{
+    padding: 10px;
+}
+.work h2{
+    font-family: "Jost", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+}
+.work p{
+    font-family: "Jost", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+
+
+/* ////////// CONDITON STYLES /////////////// */
+
+.hide {
+    display: none;
+    /* Completely hide the element */
+}
+
+.hidden {
+    opacity: 0;
+    /* Completely hide the element */
+}
+
+/* ////////// CONDITON STYLES /////////////// */
+
+
+@media screen and (min-width: 425px){
+    .works{
+        flex-direction: row;
+        align-items: normal;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .container .work{
+        width: 48%;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .container .selection{
+       display: none;
+    }
+    .container .buttons button{
+        display: initial;
+    }
+    .container .buttons button{
+        padding: 10px 16px;
+        font-size: 14px;
+        font-weight: 400;
+    }
+    .workNavigations .buttons button:hover{
+        background-color: transparent;
+        background-color:  hsl(353, 75%, 56%);
+        color: #F8F8F9;
+        transition:  background-color all 1.2s ease-out;
+    } 
+
+    .container .workNavigations,
+    .container .Buttons{
+        width: 100%;
+        padding: 10px;
+    }
+ 
+    .work h2{
+        font-family: "Jost", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+    }
+    .work p{
+        font-family: "Jost", sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+    }
+    
+}
+
+@media screen and (min-width: 1024px) {
+ 
+
+    .container .WorkHead h1{
+        font-size: 35px;
+        padding: 15px 5px 15px 40px;
+    }
+    .container .buttons button{
+        padding: 12px 22px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .container .works{
+        gap: 1rem;
+        width: 100%;
+    }
+   
+    .container .work{
+        width: 31%;
+        height: 360px;
+    }
+    
+}
