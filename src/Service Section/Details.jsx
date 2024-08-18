@@ -1,12 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import client from "../../Sanity Client/SanityClient.js";
+import { urlFor } from "../../Sanity Client/SanityClient.js";
 import next from '../assets/Icons/rightarrow.png';
 import previous from '../assets/Icons/previous.png';
 import styles from './Details.module.css';
 import { PortableText } from '@portabletext/react';
 
 const Details = () => {
+
+          //_____________________   Handle scroll   Events of ______________________\\
+
+
+          useEffect(() => {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add(styles.visible);
+                        } else {
+                            entry.target.classList.remove(styles.visible);
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+        
+            const observeElements = () => {
+                const elements = document.querySelectorAll(`.${styles.Scale}`);
+                // console.log("Elements found:", elements.length);
+                elements.forEach((el) => observer.observe(el));
+            };
+        
+            observeElements(); // Initial run
+            const observerMutation = new MutationObserver(observeElements);
+            observerMutation.observe(document.body, { childList: true, subtree: true });
+        
+            return () => {
+                observer.disconnect();
+                observerMutation.disconnect();
+            };
+        }, []);
+        
+    
+        //_____________________   Handle scroll   Events of ______________________\\
+
     const location = useLocation();
     const { slug } = useParams();
     const [selectedService, setSelectedService] = useState(null);
@@ -63,17 +101,38 @@ const Details = () => {
         }
     };
 
- c
-    const serializers = {
+
+    const components = {
         types: {
-            space: ({ node }) => {
-                if (!node || !node.height) {
-                    return <div className={styles.space} />;
-                }
-                return <div style={{ height: node.height }} className={styles.space} />
-            }
+            space: ({ value }) => {
+                // Render the space component
+                return (
+                    <div style={{ height: value.height }} className={styles.space} />
+                );
+            },
+            image: ({ value }) => {
+                const imageUrl = urlFor(value.asset).url(); // Generate the URL
+                return (
+                    <img
+                        src={imageUrl}
+                        alt={value.alt || 'Image'}
+                        className={styles.Image}
+                    />
+                );
+            },
+            video: ({ value }) => {
+                const videoUrl = value.url; // Assuming 'url' is the field in your schema for video URL
+                return (
+                  <div className={styles.videoContainer}>
+                    <video controls>
+                      <source src={videoUrl} type="video/*" /> {/* Adjust the type as needed */}
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                );
+              },
         },
-    };
+      };
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -96,15 +155,16 @@ const Details = () => {
                 <h2 className={styles.Scale}>{selectedService.title}</h2>
                 <p className={styles.Scale}>{selectedService.description}</p>
                 <div className={styles.content_Detail}>
-                    <div className={styles.Images_container}>
-                        <button
-                            className={`${styles.slider_button} ${styles.prev} ${isSmallScreen ? styles.hide_slider_button : ''}`}
-                            onClick={handlePrev}
-                        >
-                            <img src={previous} alt="previous-btn" />
-                        </button>
+                    {selectedService.serviceImages && selectedService.serviceImages.length > 0 && (
+                        <div className={styles.Images_container}>
+                            <button
+                                className={`${styles.slider_button} ${styles.prev} ${isSmallScreen ? styles.hide_slider_button : ''}`}
+                                onClick={handlePrev}
+                            >
+                                <img src={previous} alt="previous-btn" />
+                            </button>
 
-                        {selectedService.serviceImages.length > 0 && (
+
                             <div className={styles.pictures}>
                                 <img
                                     className={`${styles.sliderImage} ${styles.Scale}`}
@@ -112,41 +172,42 @@ const Details = () => {
                                     alt={selectedService.serviceImages[currentIndex]?.alt || 'Service image'}
                                 />
                             </div>
-                        )}
 
-                        <button
-                            className={`${styles.slider_button} ${styles.next} ${isSmallScreen ? styles.hide_slider_button : ''}`}
-                            onClick={handleNext}
-                        >
-                            <img src={next} alt="next-btn" />
-                        </button>
 
-                        <div className={`${styles.img_indicators} ${styles.Scale} ${!isSmallScreen ? styles.hide_img_indicators : ''}`}>
-                            {selectedService.serviceImages.map((image, idx) => (
-                                image?.asset?.url ? (
-                                    <img
-                                        key={image.asset._id}
-                                        src={image.asset.url}
+                            <button
+                                className={`${styles.slider_button} ${styles.next} ${isSmallScreen ? styles.hide_slider_button : ''}`}
+                                onClick={handleNext}
+                            >
+                                <img src={next} alt="next-btn" />
+                            </button>
+
+                            <div className={`${styles.img_indicators} ${styles.Scale} ${!isSmallScreen ? styles.hide_img_indicators : ''}`}>
+                                {selectedService.serviceImages.map((image, idx) => (
+                                    image?.asset?.url ? (
+                                        <img
+                                            key={image.asset._id}
+                                            src={image.asset.url}
+                                            onClick={() => setCurrentIndex(idx)}
+                                            className={currentIndex === idx ? `${styles.img_indicator}` : `${styles.indicator_inactive}`}
+                                            alt="image indicator"
+                                        />
+                                    ) : null
+                                ))}
+                            </div>
+
+                            <div className={`${styles.dot_indicators} ${styles.Scale} ${!isSmallScreen ? '' : styles.hide_dot_indicators}`}>
+                                {selectedService.serviceImages.map((_, idx) => (
+                                    <div
+                                        key={idx}
                                         onClick={() => setCurrentIndex(idx)}
-                                        className={currentIndex === idx ? `${styles.img_indicator}` : `${styles.indicator_inactive}`}
-                                        alt="image indicator"
-                                    />
-                                ) : null
-                            ))}
+                                        className={currentIndex === idx ? `${styles.dot_indicator}` : `${styles.indicator_inactive}`}
+                                    ></div>
+                                ))}
+                            </div>
                         </div>
-
-                        <div className={`${styles.dot_indicators} ${styles.Scale} ${!isSmallScreen ? '' : styles.hide_dot_indicators}`}>
-                            {selectedService.serviceImages.map((_, idx) => (
-                                <div
-                                    key={idx}
-                                    onClick={() => setCurrentIndex(idx)}
-                                    className={currentIndex === idx ? `${styles.dot_indicator}` : `${styles.indicator_inactive}`}
-                                ></div>
-                            ))}
-                        </div>
-                    </div>
+                    )}
                     <div className={`${styles.Blog_body} ${styles.Scale}`}>
-                        <PortableText value={selectedService.servicebody} components={serializers} />
+                        <PortableText value={selectedService.servicebody}  components={components} />
                     </div>
                 </div>
             </div>

@@ -73,8 +73,7 @@ function Work() {
                 url
               },
               alt
-            },
-            description
+            }
         }`;
 
         client.fetch(query)

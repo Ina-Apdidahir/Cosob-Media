@@ -11,6 +11,44 @@ import next from '../assets/web Images/next.png'
 
 function ServiceSection() {
 
+
+    //_____________________   Handle scroll   Events of ______________________\\
+
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add(styles.visible);
+                    } else {
+                        entry.target.classList.remove(styles.visible);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        const observeElements = () => {
+            const elements = document.querySelectorAll(`.${styles.Scale}`);
+            // console.log("Elements found:", elements.length);
+            elements.forEach((el) => observer.observe(el));
+        };
+
+        observeElements(); // Initial run
+        const observerMutation = new MutationObserver(observeElements);
+        observerMutation.observe(document.body, { childList: true, subtree: true });
+
+        return () => {
+            observer.disconnect();
+            observerMutation.disconnect();
+        };
+    }, []);
+
+
+    //_____________________   Handle scroll   Events of ______________________\\
+
+
     const location = useLocation();
     const [isHomePage, setIsHomePage] = useState(location.pathname === '/'); // Initial state
 
@@ -21,9 +59,9 @@ function ServiceSection() {
     const HeadClass = isHomePage ? styles.Head : `${styles.Head} ${styles.hide}`;
     const Head_master = isHomePage ? `${styles.Head_master} ${styles.hide}` : styles.Head_master;
 
-   const [services, setServices] = useState([])
-   const [isLoading, setIsLoading] = useState(true);
-   const [error, setError] = useState(null);
+    const [services, setServices] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const query = `*[ _type == "service" ] | order(_createdAt desc) {
@@ -60,42 +98,6 @@ function ServiceSection() {
     }, []);
 
 
-    /////////// ..... ___________   Handle scroll  Events of ____________  .... //////////////
-
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add(styles.visible);
-                    } else {
-                        entry.target.classList.remove(styles.visible);
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
-    
-        const observeElements = () => {
-            const elements = document.querySelectorAll(`.${styles.Scale}`);
-            // console.log("Elements found:", elements.length);
-            elements.forEach((el) => observer.observe(el));
-        };
-    
-        observeElements(); // Initial run
-        const observerMutation = new MutationObserver(observeElements);
-        observerMutation.observe(document.body, { childList: true, subtree: true });
-    
-        return () => {
-            observer.disconnect();
-            observerMutation.disconnect();
-        };
-    }, []);
-    
-
-    /////////// ..... ___________   Handle scroll   Events of ____________  .... //////////////
-
 
     if (isLoading) {
         return <div></div>;
@@ -121,13 +123,13 @@ function ServiceSection() {
                 <div className={styles.serviceList}>
 
                     {services.map((service, index) => (
-                        <Link key={index} to={`/details/${service.slug?.current}`}> 
+                        <Link key={index} to={`/details/${service.slug?.current}`}>
                             <div className={styles.Service}>
                                 <div className={styles.Image}>
-                                    {service.coverImage && service.coverImage.asset &&(
+                                    {service.coverImage && service.coverImage.asset && (
                                         <img className={`${styles.img} ${styles.Scale}`} src={service.coverImage.asset.url} alt={service.title} />
                                     )}
-                                    
+
                                 </div>
                                 <div className={`${styles.texts} ${styles.Scale}`}>
                                     <p>{service.title}</p>
