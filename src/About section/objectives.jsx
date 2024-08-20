@@ -104,7 +104,6 @@ function Objectives() {
                                 <PortableText value={objective.description} components={components} />
                             </div>
                         </div>
-
                     ))}
                 </div>
             )}

@@ -1,7 +1,34 @@
+// import { PortableText } from '@portabletext/react';
 import styles from './Testmonials.module.css';
 import React, { useState, useEffect } from 'react';
 
-const TestimonialSlider = ({ reviews }) => {
+
+import client from '../../Sanity Client/SanityClient';
+import { PortableText } from '@portabletext/react';
+
+const TestimonialSlider = () => {
+
+  const [testimonials, setTestimonials] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const query = `*[ _type == "testimonial" ] {
+      clientName,
+      refrence,
+      clientFeedback
+  }`;
+    client.fetch(query)
+      .then(data => {
+        setTestimonials(data);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        setError(err);
+        setIsLoading(false);
+      });
+  }, []);
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isTwoPerSlide, setIsTwoPerSlide] = useState(window.innerWidth >= 768);
@@ -23,18 +50,18 @@ const TestimonialSlider = ({ reviews }) => {
       const intervalId = setInterval(() => {
         setCurrentSlide((currentSlide) => {
           if (isTwoPerSlide) {
-            return currentSlide >= Math.ceil(reviews.length / 2) - 1
+            return currentSlide >= Math.ceil(testimonials.length / 2) - 1
               ? 0
               : currentSlide + 1;
           } else {
-            return currentSlide === reviews.length - 1 ? 0 : currentSlide + 1;
+            return currentSlide === testimonials.length - 1 ? 0 : currentSlide + 1;
           }
         });
       }, 5000);
 
       return () => clearInterval(intervalId);
     }
-  }, [isPaused, currentSlide, reviews.length, isTwoPerSlide]);
+  }, [isPaused, currentSlide, testimonials.length, isTwoPerSlide]);
 
   const handleMouseEnter = () => {
     setIsPaused(true);
@@ -44,6 +71,21 @@ const TestimonialSlider = ({ reviews }) => {
     setIsPaused(false);
   };
 
+ 
+
+
+  const components = {
+    types: {
+      space: ({ value }) => {
+        // Render the space component
+        return (
+          <div style={{ height: value.height }} className={styles.space} />
+        );
+      },
+    }
+  }
+
+
   return (
     <div
       className={styles.reviews}
@@ -52,52 +94,52 @@ const TestimonialSlider = ({ reviews }) => {
     >
       <div className={styles.rev_container}>
         {isTwoPerSlide
-          ? reviews.reduce((rows, comment, idx) => {
-              if (idx % 2 === 0) rows.push([comment]);
-              else rows[rows.length - 1].push(comment);
-              return rows;
-            }, []).map((row, idx) => (
-              <div
-                key={idx}
-                className={`${currentSlide === idx ? styles.slide : styles.slide_hidden}`}
-              >
-                {row.map((comment, index) => (
-                  <div
-                    id={styles.review}
-                    key={index}
-                    className={styles.single_review}
-                  >
-                    <div className={styles.Review_head}>
-                      <h2>{comment.author}</h2>
-                      <p>{comment.website}</p>
-                    </div>
-                    <div className={styles.Review_body}>
-                      <p>{comment.content}</p>
-                    </div>
+          ? testimonials.reduce((rows, testimonial, idx) => {
+            if (idx % 2 === 0) rows.push([testimonial]);
+            else rows[rows.length - 1].push(testimonial);
+            return rows;
+          }, []).map((row, idx) => (
+            <div
+              key={idx}
+              className={`${currentSlide === idx ? styles.slide : styles.slide_hidden}`}
+            >
+              {row.map((testimonial, index) => (
+                <div
+                  id={styles.review}
+                  key={index}
+                  className={styles.single_review}
+                >
+                  <div className={styles.Review_head}>
+                    <h2>{testimonial?.clientName}</h2>
+                    <p>{testimonial?.refrence}</p>
                   </div>
-                ))}
-              </div>
-            ))
-          : reviews.map((comment, idx) => (
-              <div
-                id={styles.review}
-                key={idx}
-                className={`${currentSlide === idx ? styles.slide : styles.slide_hidden}`}
-              >
-                <div className={styles.Review_head}>
-                  <h2>{comment.author}</h2>
-                  <p>{comment.website}</p>
+                  <div className={styles.Review_body}>
+                    < PortableText value={testimonial?.clientFeedback} components={components} />
+                  </div>
                 </div>
-                <div className={styles.Review_body}>
-                  <p>{comment.content}</p>
-                </div>
+              ))}
+            </div>
+          ))
+          : testimonials.map((testimonial, idx) => (
+            <div
+              id={styles.review}
+              key={idx}
+              className={`${currentSlide === idx ? styles.slide : styles.slide_hidden}`}
+            >
+              <div className={styles.Review_head}>
+                <h2>{testimonial?.clientName}</h2>
+                <p>{testimonial?.refrence}</p>
               </div>
-            ))}
+              <div className={styles.Review_body}>
+                < PortableText value={testimonial?.clientFeedback} components={components} />
+              </div>
+            </div>
+          ))}
       </div>
       <div className={styles.indicators}>
         {(isTwoPerSlide
-          ? new Array(Math.ceil(reviews.length / 2)).fill(0)
-          : reviews
+          ? new Array(Math.ceil(testimonials.length / 2)).fill(0)
+          : testimonials
         ).map((_, idx) => (
           <div
             key={idx}

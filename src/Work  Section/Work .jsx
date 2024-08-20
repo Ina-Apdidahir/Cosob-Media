@@ -37,7 +37,6 @@ function Work() {
     
         const observeElements = () => {
             const elements = document.querySelectorAll(`.${styles.Scale}`);
-            console.log("Elements found:", elements.length);
             elements.forEach((el) => observer.observe(el));
         };
     
