@@ -1,0 +1,148 @@
+
+
+/* _________________ Transitions____________________ */
+.Scale {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease-out;
+}
+
+.Scale.visible{
+    opacity: 1;
+    transform: scale(1);
+}
+/* _________________ Transitions____________________ */
+
+
+
+.scope {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    padding: 1.5rem 0.5rem;
+    gap: 2rem 0.2rem;
+    background-color: #F5FFFF;
+}
+
+.OurVission,
+.OurMission,
+.OurStory {
+    width: 100%;
+    padding: 1rem 0.6rem;
+    border-top: 0.01rem solid hsla(353, 75%, 56%, 0.25);
+    position: relative;
+}
+.contex{
+    width: 100%;
+}
+.contex .title p{
+    font-size: 18px;
+    font-weight: 600;
+    padding: 1rem 0;
+    position: relative;
+    z-index: 10;
+}
+.contex .title p::after{
+    content: "";
+    position: absolute;
+    background-color: #E33B4E;
+    bottom: 0.75rem;
+    left: 0;
+    height: 0.5rem;
+    width: 1rem;
+    z-index: -1;
+}
+
+
+
+
+.contex::before{
+    content: "";
+    position: absolute;
+    background-color: #E33B4E;
+    top: -0.25rem;
+    left: 0;
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 50%;
+}
+
+
+.contex img{
+    width: 100%;
+}
+.contex p{
+    font-size: 16px;
+}
+.contex h1{
+    font-size: 20px;
+}
+.contex h2{
+    font-size: 18px;
+}
+.contex h3{
+    font-size: 16px;
+}
+.contex ul,
+.contex li{
+    list-style: square;
+}
+.contex .space{
+    padding: 1rem;
+}
+.contex strong{
+    font-weight: 600;
+}
+
+@media screen and (min-width: 768px) {
+
+    .scope {
+        display: flex;
+        align-items: normal;
+        justify-content: space-between;
+        height: 380px;
+        overflow: hidden;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    .OurVission,
+    .OurMission,
+    .OurStory {
+        width: 48%;
+        padding: 1rem 1rem;
+        border-top: 0.01rem solid hsla(353, 75%, 56%, 0.25);
+    }
+
+
+    .contex h1{
+        font-size: 28px;
+    }
+    .contex h2{
+        font-size: 24px;
+    }
+    .contex h3{
+        font-size: 22px;
+    }
+    .contex strong{
+        font-weight: 700;
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    .contex p{
+        font-size: 18px;
+    }
+    .OurVission,
+    .OurMission,
+    .OurStory {
+        width: 33%;
+        padding: 1rem 1rem;
+        border-top: 0.01rem solid hsla(353, 75%, 56%, 0.25);
+    }
+
+}

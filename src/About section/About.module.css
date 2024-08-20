@@ -12,68 +12,50 @@
 
 /* \\\\\\\\\\\\\\\  Transitions  \\\\\\\\\\\\\\\\\\\ */
 
-.Head_master {
+
+.Scale {
     opacity: 0;
-    transition: all 1s ease-in-out;
-    position: relative;
-    top: -5rem;
+    transform: scale(0.8);
+    transition: all 0.8s ease-out;
 }
 
-.Head_master.visible {
-    opacity: 1;
-    top: 0rem;
-}
-
-.projects {
-    opacity: 0;
-    transition: all 1s ease-in-out;
-}
-
-.img {
-    opacity: 0;
-    transition: all 1.2s ease-out;
-}
-
-.scale {
-    transform: scale(0.7);
-}
-
-.scale.visible {
+.Scale.visible {
     opacity: 1;
     transform: scale(1);
 }
 
-.text_section {
+
+.SLide:nth-child(1) {
     opacity: 0;
-    margin: 1rem 0;
-}
-
-
-.from_left:nth-child(1) {
-     transform: scale(0.7);
+    transform: scale(0.8);
     transition: all 0.8s ease-out;
 }
 
-.from_left:nth-child(2) {
-     transform: scale(0.7);
-    transition: all 1s ease-out;
+.SLide:nth-child(2) {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease-out;
 }
 
-.from_left:nth-child(3) {
-     transform: scale(0.7);
-    transition: all 1.2s ease-out;
+.SLide:nth-child(3) {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease-out;
 }
 
-.from_left:nth-child(4) {
-     transform: scale(0.7);
-    transition: all 1.4s ease-out;
-}
-.from_left:nth-child(5) {
-     transform: scale(0.7);
-    transition: all 1.4s ease-out;
+.SLide:nth-child(4) {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease-out;
 }
 
-.from_left.visible {
+.SLide:nth-child(5) {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease-out;
+}
+
+.SLide.visible {
     opacity: 1;
     transform: scale(1);
 }
@@ -190,9 +172,9 @@
 }
 
 .bottom .projects {
-    margin: 2rem;
+    margin: 2rem 1rem;
     padding: 0.3rem 0;
-    width: 70%;
+    width: 30rem;
     background: #E33B4E;
     color: #FFFFFF;
     text-align: center;
@@ -203,20 +185,71 @@
     justify-content: space-evenly;
 }
 
+/* .scope {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    padding: 1.5rem 0.5rem;
+}
+
+.OurVission,
+.OurMission,
+.OurStory {
+    width: 100%;
+    padding: 1rem 0.6rem;
+    border-top: 0.01rem solid hsla(353, 75%, 56%, 0.25);
+    position: relative;
+}
+.contex{
+    width: 100%;
+}
+.contex::before{
+    content: "";
+    position: absolute;
+    background-color: #E33B4E;
+    top: -0.25rem;
+    left: 0;
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 50%;
+}
+.contex img{
+    width: 100%;
+}
+.contex p{
+    font-size: 16px;
+}
+.contex h1{
+    font-size: 20px;
+}
+.contex h2{
+    font-size: 18px;
+}
+.contex h3{
+    font-size: 16px;
+}
+.contex ul,
+.contex li{
+    list-style: square;
+}
+.contex .space{
+    padding: 2rem;
+}
+.contex strong{
+    font-weight: 600;
+} */
+
 @media screen and (min-width: 525px) {
 
-    .bottom .texts .text_section,
     .texts .text_section {
         max-width: 48%;
     }
-
     .bottom .projects {
-        width: 40%;
-        height: 100px;
-        margin: 15px;
-        padding: 0;
+        width: 20rem;
+        height: 5rem;
     }
-
 }
 
 @media screen and (min-width: 768px) {
@@ -262,12 +295,40 @@
         font-size: 16px;
         font-weight: 700;
     }
-
     .bottom .projects {
-        width: 70%;
-        margin: 15px;
-        padding: 0.3rem 0;
+        width: 20rem;
+        height: 5rem;
+        margin: 1rem;
     }
+
+    /* .scope {
+        width: 100%;
+        display: flex;
+        align-items: normal;
+        justify-content: space-between;
+    }
+
+    .OurVission,
+    .OurMission,
+    .OurStory {
+        width: 33%;
+        padding: 1rem 0.6rem;
+        border-top: 0.01rem solid hsla(353, 75%, 56%, 0.25);
+    }
+
+
+    .contex h1{
+        font-size: 28px;
+    }
+    .contex h2{
+        font-size: 24px;
+    }
+    .contex h3{
+        font-size: 22px;
+    }
+    .contex strong{
+        font-weight: 700;
+    } */
 
 }
 
@@ -305,28 +366,8 @@
         width: 70%;
     }
 
-    .from_left:nth-child(1) {
-        transform: translateX(-100vw);
-        transition: all 0.8s ease-out;
-    }
-    
-    .from_left:nth-child(2) {
-        transform: translateX(100vw);
-        transition: all 1s ease-out;
-    }
-    
-    .from_left:nth-child(3) {
-        transform: translateX(-100vw);
-        transition: all 1.2s ease-out;
-    }
-    
-    .from_left:nth-child(4) {
-        transform: translateX(100vw);
-        transition: all 1.4s ease-out;
-    }
-    .from_left.visible {
-        opacity: 1;
-        transform: translateX(0);
+    .contex p{
+        font-size: 18px;
     }
 
 }

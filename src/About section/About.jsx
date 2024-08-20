@@ -2,11 +2,48 @@ import styles from './About.module.css'
 import { useLocation } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 
-import photopgraphy from '../assets/web Images/photopgraphy.png'
-import Tribot from '../assets/web Images/Welpapers/Tripot.png'
+import client from '../../Sanity Client/SanityClient';
+import { PortableText } from '@portabletext/react';
+
+import Objectives from './objectives.jsx';
 
 function About() {
 
+    //__________________________ Scroll animations ____________________\\
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add(styles.visible);
+                    } else {
+                        entry.target.classList.remove(styles.visible);
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        const observeElements = () => {
+            const elements = document.querySelectorAll(`.${styles.Scale}`);
+            elements.forEach((el) => observer.observe(el));
+
+            const SLide = document.querySelectorAll(`.${styles.SLide}`);
+            SLide.forEach((el) => observer.observe(el));
+        };
+
+        observeElements(); // Initial run
+        const observerMutation = new MutationObserver(observeElements);
+        observerMutation.observe(document.body, { childList: true, subtree: true });
+
+        return () => {
+            observer.disconnect();
+            observerMutation.disconnect();
+        };
+    }, []);
+
+    //__________________________ Scroll animations ____________________\\
 
     const location = useLocation();
     const [isHomePage, setIsHomePage] = useState(location.pathname === '/'); // Initial state
@@ -19,7 +56,71 @@ function About() {
     const Head_master = isHomePage ? `${styles.Head_master} ${styles.hide}` : styles.Head_master;
 
 
+
+    const [about, setAbout] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    let fetchedClients;
+    let fetchedProjects;
+
+    useEffect(() => {
+        const query = `*[ _type == "about" ] {
+            aboutImage1 {
+              asset -> {
+                _id,
+                url
+              },
+              alt
+            },
+            aboutImage2 {
+              asset -> {
+                _id,
+                url
+              },
+              alt
+            },
+            pragraph1,
+            pragraph2,
+            pragraph3,
+            pragraph4,
+            pragraph5,
+            clients,
+            projects
+        }`;
+
+        client.fetch(query)
+            .then((data) => {
+                setAbout(data[0]);
+                setIsLoading(false);
+                fetchedClients = data[0]?.clients;
+                fetchedProjects = data[0]?.projects;
+            })
+            .catch((err) => {
+                console.error('Error fetching data:', err);
+                setError(err);
+                setIsLoading(false);
+            });
+    }, []);
+
+
+    const components = {
+        types: {
+            space: ({ value }) => {
+                // Render the space component
+                return (
+                    <div style={{ height: value.height }} className={styles.space} />
+                );
+            }
+        },
+    }
+
+
+
+
     // ____________________ COUNTING ____________________//
+
+    // console.log(about.clients.length)
 
     let [clientCount, setClientCount] = useState(0);
     let [projectCount, setProjectCount] = useState(0);
@@ -27,10 +128,10 @@ function About() {
     useEffect(() => {
         // Simulate counting animation on initial render
         const intervalId = setInterval(() => {
-            if (clientCount <= 150) {
+            if (clientCount <= fetchedClients) {
                 setClientCount(clientCount++);
             }
-            if (projectCount <= 10) {
+            if (projectCount <= fetchedProjects) {
                 setProjectCount(projectCount++);
             }
         }, 100); // Adjust interval for desired animation speed (in milliseconds)
@@ -41,148 +142,118 @@ function About() {
     // ____________________ COUNTING ____________________//
 
 
-    /////////////////// Scroll animations ////////////////////////
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const Txtelements = document.querySelectorAll(`.${styles.text_section}`);
-            const Imgelements = document.querySelectorAll(`.${styles.img}`);
-            const projectelements = document.querySelectorAll(`.${styles.projects}`);
-            const HMrelements = document.querySelectorAll(`.${styles.Head_master}`);
-
-            Txtelements.forEach((el) => {
-                const rect = el.getBoundingClientRect();
-                const partiallyInView = rect.top < window.innerHeight && rect.bottom > 0;
-
-                if (partiallyInView) {
-                    el.classList.add(styles.visible);
-                } else {
-                    el.classList.remove(styles.visible);
-                }
-            });
-            Imgelements.forEach((el) => {
-                const rect = el.getBoundingClientRect();
-                const partiallyInView = rect.top < window.innerHeight && rect.bottom > 0;
-
-                if (partiallyInView) {
-                    el.classList.add(styles.visible);
-                } else {
-                    el.classList.remove(styles.visible);
-                }
-            });
-
-            projectelements.forEach((el) => {
-                const rect = el.getBoundingClientRect();
-                const partiallyInView = rect.top < window.innerHeight && rect.bottom > 0;
-
-                if (partiallyInView) {
-                    el.classList.add(styles.visible);
-                } else {
-                    el.classList.remove(styles.visible);
-                }
-            });
-
-            HMrelements.forEach((el) => {
-                const rect = el.getBoundingClientRect();
-                const partiallyInView = rect.top < window.innerHeight && rect.bottom > 0;
-
-                if (partiallyInView) {
-                    el.classList.add(styles.visible);
-                } else {
-                    el.classList.remove(styles.visible);
-                }
-            });
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Run the function once to check the visibility on load
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-
-    /////////////////// Scroll animations ////////////////////////
 
     return (
-        <div className={styles.container}>
-            <div className={Head_master} >
-                <h1>About Us</h1>
-            </div>
-            <div className={styles.about_container}>
-                <div className={HeadClass}>
-                    <h1>About Us</h1>
-                </div>
-                <div className={styles.About}>
-                    <div className={styles.top}>
-                        <div className={styles.image} >
-                            <img className={`${styles.img} ${styles.scale}`} src={photopgraphy} alt="" />
-                        </div>
-                        <div className={styles.texts}>
-                            <div className={`${styles.text_section} ${styles.from_left}`}>
-                                <h1>Photos that Speak Volumes </h1>
-                                <p>
-                                    Our photographers capture the essence of your brand, product, or event.
-                                    We use our expertise to craft stunning visuals that tell your story
-                                    and resonate with your audience.
-                                </p>
-                            </div>
-                            <div className={`${styles.text_section} ${styles.from_left}`}>
-                                <h1>Branding that Stands Out </h1>
-                                <p>
-                                    Build a strong brand identity with our team. We help you develop a unique voice,
-                                    design a captivating logo, and craft messaging that effectively
-                                    communicates your value.
-                                </p>
-                            </div>
-                            <div className={`${styles.text_section} ${styles.from_left}`}>
-                                <h1>Videos that Captivate</h1>
-                                <p>
-                                    Move beyond the ordinary with our videographers. We create dynamic and
-                                    engaging videos that connect with your viewers on a deeper level,
-                                    leaving a lasting impression.
-                                </p>
-                            </div>
-                            <div className={`${styles.text_section} ${styles.from_left}`}>
-                                <h1>Events that Impress </h1>
-                                <p>
-                                    Planning an event shouldn't be stressful. We handle everything from concept
-                                    to execution, ensuring a flawless and memorable experience for your guests.
-                                </p>
-                            </div>
-                        </div>
+        <>
+
+            {about ? (
+                <div className={styles.container}>
+                    <div className={Head_master} >
+                        <h1 className={styles.Scale}>About Us</h1>
                     </div>
-                    <div className={styles.bottom}>
-                        <div className={styles.texts}>
-                            <div className={`${styles.text_section} ${styles.from_left}`}>
-                                <h1>Expriences and Projects</h1>
-                                <p>
-                                    For over a decade, Cosob Media Works has been a trusted partner for businesses
-                                    and individuals seeking to elevate their online presence.
-                                    We've captured stunning photography for global brands,
-                                    crafted captivating videos that have garnered millions of views,
-                                    and executed flawless events that leave a lasting impression.
-                                    Let our experience turn your vision into reality.
-                                </p>
-                            </div>
-                            <div className={`${styles.projects} ${styles.scale}`}>
-                                <div className={styles.project}>
-                                    <h2>{clientCount}+</h2>
-                                    <small>Clients served</small>
-                                </div>
-                                <div className={styles.project}>
-                                    <h2>{projectCount}+</h2>
-                                    <small>Projects</small>
+                    <div className={styles.about_container}>
+                        <div className={HeadClass}>
+                            <h1>About Us</h1>
+                        </div>
+                        <div className={styles.About}>
+                            <div className={styles.top}>
+
+                                {about.aboutImage1 && about.aboutImage1.asset && (
+                                    <div className={styles.image} >
+                                        <img className={`${styles.img} ${styles.Scale}`} src={about.aboutImage1.asset.url} alt="" />
+                                    </div>
+                                )}
+
+                                <div className={styles.texts}>
+                                    {about.pragraph1 && (
+                                        <div className={`${styles.text_section} ${styles.SLide}`}>
+                                            <PortableText value={about.pragraph1} components={components} />
+                                        </div>
+                                    )}
+                                    {about.pragraph2 && (
+                                        <div className={`${styles.text_section} ${styles.SLide}`}>
+                                            <PortableText value={about.pragraph2} components={components} />
+                                        </div>
+                                    )}
+
+                                    {about.pragraph3 && (
+                                        <div className={`${styles.text_section} ${styles.SLide}`}>
+                                            <PortableText value={about.pragraph3} components={components} />
+                                        </div>
+                                    )}
+
+                                    {about.pragraph4 && (
+                                        <div className={`${styles.text_section} ${styles.SLide}`}>
+                                            <PortableText value={about.pragraph4} components={components} />
+                                        </div>
+
+                                    )}
                                 </div>
                             </div>
-                        </div>
-                        <div className={styles.image}>
-                            <img className={`${styles.img} ${styles.scale}`} src={Tribot} alt="" />
+                            <div className={styles.bottom}>
+                                <div className={styles.texts}>
+
+                                    {about.pragraph5 && (
+                                        <div className={`${styles.text_section} ${styles.SLide}`}>
+                                            <PortableText value={about.pragraph5} components={components} />
+                                        </div>
+                                    )}
+
+                                    {about.clients && about.projects && (
+                                        <div className={`${styles.projects} ${styles.Scale}`}>
+                                            <div className={styles.project}>
+                                                <h2>{clientCount}+</h2>
+                                                <small>Clients served</small>
+                                            </div>
+                                            <div className={styles.project}>
+                                                <h2>{projectCount}+</h2>
+                                                <small>Projects</small>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                </div>
+
+                                {about.aboutImage2 && about.aboutImage2.asset && (
+                                    <div className={styles.image}>
+                                        <img className={`${styles.img} ${styles.Scale}`} src={about.aboutImage2.asset.url} alt="" />
+                                    </div>
+                                )}
+
+                            </div>
+                            {/* <div className={styles.scope}>
+                                <div className={styles.OurVission}>
+                                    <div className={styles.contex}>
+                                        <p>Hello vission</p>
+                                        <small>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quia? Eveniet ea omnis non praesentium natus dolores, suscipit, molestiae vitae quod deserunt aliquam labore provident ipsum soluta corrupti nam qui?</small>
+                                    </div>
+                                </div>
+                                <div className={styles.OurMission}>
+                                    <div className={styles.contex}>
+                                        <p>Hello Mission</p>
+                                        <small>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quia? Eveniet ea omnis non praesentium natus dolores, suscipit, molestiae vitae quod deserunt aliquam labore provident ipsum soluta corrupti nam qui?</small>
+                                    </div>
+                                </div>
+                                <div className={styles.OurStory}>
+                                    <div className={styles.contex}>
+                                        <p>Hello storry</p>
+                                        <small>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quia? Eveniet ea omnis non praesentium natus dolores, suscipit, molestiae vitae quod deserunt aliquam labore provident ipsum soluta corrupti nam qui?</small>
+                                    </div>
+                                </div>
+                            </div> */}
+
+                            <Objectives />
+
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            ) : ''}
+
+        </>
     )
 }
 
